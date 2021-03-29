@@ -10,7 +10,7 @@ def get_detector():
     return apriltag.Detector(options)
 
 def detect(detector, img):
-
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     results = detector.detect(gray)
     print("[INFO] {} total AprilTags detected".format(len(results)))
     # loop over the AprilTag detection results
