@@ -1,5 +1,6 @@
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+import apriltag
 import argparse
 import cv2
 import time
@@ -25,11 +26,11 @@ def init_camera():
     camera = PiCamera()
     camera.resolution = (640, 480)
     camera.framerate = 32
-    return PiRGBArray(camera, size=(640, 480))
+    return PiRGBArray(camera, size=(640, 480)), camera
 
 rawCapture = init_camera()
 
-detector = get_detector()
+detector, camera = get_detector()
  
 # allow the camera to warmup
 time.sleep(0.1)
