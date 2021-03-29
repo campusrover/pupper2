@@ -28,9 +28,9 @@ def init_camera():
     camera.framerate = 32
     return PiRGBArray(camera, size=(640, 480)), camera
 
-rawCapture = init_camera()
+rawCapture, camera = init_camera()
 
-detector, camera = get_detector()
+detector = get_detector()
  
 # allow the camera to warmup
 time.sleep(0.1)
