@@ -50,7 +50,7 @@ class Camera:
             euler_angles = self.rotationMatrixToEulerAngles(rot_mat)
             transform = r.pose_t
             #print(euler_angles)
-            print(transform)
+            print(self.hypot(transform))
  
     # Checks if a matrix is a valid rotation matrix.
     def isRotationMatrix(self, R) :
@@ -66,7 +66,7 @@ class Camera:
     # of the euler angles ( x and z are swapped ).
     def rotationMatrixToEulerAngles(self, R) :
 
-        assert(isRotationMatrix(R))
+        assert(self.isRotationMatrix(R))
         
         sy = math.sqrt(R[0,0] * R[0,0] +  R[1,0] * R[1,0])
         
@@ -82,3 +82,10 @@ class Camera:
             z = 0
 
         return np.array([x, y, z])
+
+    def hypot(self, x, y, z):
+        return (x ** 2 + y ** 2 + z ** 2) ** 0.5
+
+if __name__ == "__main__":
+    c = Camera()
+    c.capture_continuous()
