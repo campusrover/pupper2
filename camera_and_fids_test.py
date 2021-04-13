@@ -7,6 +7,7 @@ import argparse
 import cv2
 import time
 import math
+import numpy as np
 
 class Camera:
 
@@ -45,8 +46,9 @@ class Camera:
             # extract the bounding box (x, y)-coordinates for the AprilTag
             # and convert each of the (x, y)-coordinate pairs to integers
             (ptA, ptB, ptC, ptD) = r.corners
-
-            print(self.isRotationMatrix(r.pose_R))
+            rot_mat = r.pose_R
+            euler_angles = self.rotationMatrixToEulerAngles(rot_mat)
+            print(euler_angles)
  
     # Checks if a matrix is a valid rotation matrix.
     def isRotationMatrix(self, R) :
