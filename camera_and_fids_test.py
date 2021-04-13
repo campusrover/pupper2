@@ -83,8 +83,8 @@ class Camera:
 
         return np.array([x, y, z])
 
-    def hypot(self, x, y, z):
-        return (x ** 2 + y ** 2 + z ** 2) ** 0.5
+    def hypot(self, tf):
+        return (tf[0] ** 2 + tf[1] ** 2 + tf[2] ** 2) ** 0.5
 
 if __name__ == "__main__":
     c = Camera()
