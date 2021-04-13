@@ -39,7 +39,7 @@ class Camera:
 
     def detect(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        results = self.detector.detect(gray, estimate_tag_pose=True, camera_params=(3.6, 3.6, 0, 0), tag_size=0.065)
+        results = self.detector.detect(gray, estimate_tag_pose=True, camera_params=(2571.4, 2571.4, 320,240), tag_size=0.065)
         print("[INFO] {} total AprilTags detected".format(len(results)))
         # loop over the AprilTag detection results
         for r in results:
@@ -50,7 +50,9 @@ class Camera:
             euler_angles = self.rotationMatrixToEulerAngles(rot_mat)
             transform = r.pose_t
             #print(euler_angles)
-            print(self.hypot(transform))
+            # print(self.hypot(transform))
+            print("X: " + str(transform[0]))
+            print("Go left" if transform[0] < 0 else "Go right")
  
     # Checks if a matrix is a valid rotation matrix.
     def isRotationMatrix(self, R) :
