@@ -48,7 +48,9 @@ class Camera:
             (ptA, ptB, ptC, ptD) = r.corners
             rot_mat = r.pose_R
             euler_angles = self.rotationMatrixToEulerAngles(rot_mat)
-            print(euler_angles)
+            transform = r.pose_t
+            #print(euler_angles)
+            print(transform)
  
     # Checks if a matrix is a valid rotation matrix.
     def isRotationMatrix(self, R) :
