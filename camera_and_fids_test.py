@@ -38,33 +38,43 @@ class Camera:
 
     def detect(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        results = detector.detect(gray, estimate_tag_pose=True, camera_params=(3.6, 3.6, 0, 0), tag_size=0.065)
+        results = self.detector.detect(gray, estimate_tag_pose=True, camera_params=(3.6, 3.6, 0, 0), tag_size=0.065)
         print("[INFO] {} total AprilTags detected".format(len(results)))
         # loop over the AprilTag detection results
         for r in results:
             # extract the bounding box (x, y)-coordinates for the AprilTag
             # and convert each of the (x, y)-coordinate pairs to integers
             (ptA, ptB, ptC, ptD) = r.corners
-            print(r.pose_R)
+
+            print(self.isRotationMatrix(r.pose_R))
  
-    def euler_from_quaternion(self, x, y, z, w):
-            """
-            Convert a quaternion into euler angles (roll, pitch, yaw)
-            roll is rotation around x in radians (counterclockwise)
-            pitch is rotation around y in radians (counterclockwise)
-            yaw is rotation around z in radians (counterclockwise)
-            """
-            t0 = +2.0 * (w * x + y * z)
-            t1 = +1.0 - 2.0 * (x * x + y * y)
-            roll_x = math.atan2(t0, t1)
+    # Checks if a matrix is a valid rotation matrix.
+    def isRotationMatrix(self, R) :
+        Rt = np.transpose(R)
+        shouldBeIdentity = np.dot(Rt, R)
+        I = np.identity(3, dtype = R.dtype)
+        n = np.linalg.norm(I - shouldBeIdentity)
+        return n < 1e-6
+
+
+    # Calculates rotation matrix to euler angles
+    # The result is the same as MATLAB except the order
+    # of the euler angles ( x and z are swapped ).
+    def rotationMatrixToEulerAngles(self, R) :
+
+        assert(isRotationMatrix(R))
         
-            t2 = +2.0 * (w * y - z * x)
-            t2 = +1.0 if t2 > +1.0 else t2
-            t2 = -1.0 if t2 < -1.0 else t2
-            pitch_y = math.asin(t2)
+        sy = math.sqrt(R[0,0] * R[0,0] +  R[1,0] * R[1,0])
         
-            t3 = +2.0 * (w * z + x * y)
-            t4 = +1.0 - 2.0 * (y * y + z * z)
-            yaw_z = math.atan2(t3, t4)
-        
-            return roll_x, pitch_y, yaw_z # in radians
+        singular = sy < 1e-6
+
+        if  not singular :
+            x = math.atan2(R[2,1] , R[2,2])
+            y = math.atan2(-R[2,0], sy)
+            z = math.atan2(R[1,0], R[0,0])
+        else :
+            x = math.atan2(-R[1,2], R[1,1])
+            y = math.atan2(-R[2,0], sy)
+            z = 0
+
+        return np.array([x, y, z])
