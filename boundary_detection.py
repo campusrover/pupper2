@@ -19,7 +19,7 @@ class Shape:
         self.center = None
         self.uid = None
 
-    def set_id(self, uid):
+    def set_uid(self, uid):
         self.uid = uid
 
     def set_points(self, points):
@@ -88,6 +88,13 @@ class Enviorment:
             count += 1
         return -1
 
+    def find_obstacle_by_uid(self, search_uid):
+        count = 0
+        for ob in self.obstacles:
+            if ob.uid == search_uid: return count
+            count += 1
+        return -1
+
     def add_obstacle(self, ob):
         if self.find_obstacle == -1:
             self.obstacles.append(ob)
@@ -104,3 +111,10 @@ class Enviorment:
         if not self.is_valid(): return
         for ob in self.obstacles:
             self.obstacles.append(self.agent + ob)
+
+    def list_boundaries(self):
+        if not self.is_valid(): return
+        count = 0
+        for boundary in self.boundaries:
+            print("Boundary " + str(count) + " has " + str(len(boundary)) + " points")
+            count += 1
