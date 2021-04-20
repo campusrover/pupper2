@@ -96,7 +96,7 @@ class Enviorment:
         return -1
 
     def add_obstacle(self, ob):
-        if self.find_obstacle == -1:
+        if self.find_obstacle(ob) == -1:
             self.obstacles.append(ob)
 
     def remove_obstacle(self, ob):
