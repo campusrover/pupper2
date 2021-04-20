@@ -60,7 +60,7 @@ class Vision:
             y = math.atan2(-R[2, 0], sy)
             z = 0
 
-        return np.array([x, y, z])
+        return [x, y, z]
 
     def hypot(self, tf):
         return (tf[0] ** 2 + tf[1] ** 2 + tf[2] ** 2) ** 0.5
