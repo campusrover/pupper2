@@ -8,7 +8,7 @@ if __name__ == "__main__":
     cv = Vision()
     frames = cv.capture_continuous()
     env = Enviorment()
-    env.set_agent = ego_agent
+    env.set_agent(ego_agent)
     while True:
         results = next(frames)
         if not results: 
