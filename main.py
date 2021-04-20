@@ -22,6 +22,8 @@ if __name__ == "__main__":
                 new_obstacle = deepcopy(obstacle)
                 new_obstacle.set_uid = found_uid
                 env.add_obstacle(new_obstacle)
+        env.create_boundaries()
         env.list_boundaries()
+        env.clear_boundaries()
 
 

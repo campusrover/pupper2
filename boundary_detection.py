@@ -110,7 +110,10 @@ class Enviorment:
     def create_boundaries(self):
         if not self.is_valid(): return
         for ob in self.obstacles:
-            self.obstacles.append(self.agent + ob)
+            self.boundaries.append(self.agent + ob)
+
+    def clear_boundaries(self):
+        self.boundaries = []
 
     def list_boundaries(self):
         if not self.is_valid(): return
