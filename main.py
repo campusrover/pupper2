@@ -11,9 +11,12 @@ if __name__ == "__main__":
     env.set_agent = ego_agent
     while True:
         results = next(frames)
-        if not results: continue
+        if not results: 
+            print("No fiducials found")
+            continue
         for result in results:
             uid = result.tag_id
+            print("Found fiducial " + str(uid))
             found_uid = env.find_obstacle_by_uid(uid)
             if found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
