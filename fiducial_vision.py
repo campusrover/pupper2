@@ -28,7 +28,7 @@ class Vision:
             for frame in self.camera.capture_continuous(self.capture, format=format, use_video_port=use_video_port):
                 image = frame.array
                 image = cv2.flip(image, -1)
-
+                self.capture.truncate(0)
                 yield self.detect(image)
         return frame_generator()
 
