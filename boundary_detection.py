@@ -110,8 +110,12 @@ class Enviorment:
     def create_boundaries(self):
         if not self.is_valid(): return
         for ob in self.obstacles:
-            self.boundaries.append(self.agent + ob)
-        print("Creating boundaries")
+            boundary_result = self.agent + ob
+            self.boundaries.append(boundary_result)
+            print("Boundary len: " + str(len(boundary_result)))
+            print("Agent len: " + str(len(self.agent.points)))
+            print("Obs len: " + str(len(ob.points)))
+
 
     def clear_boundaries(self):
         self.boundaries = []
