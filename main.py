@@ -12,7 +12,6 @@ if __name__ == "__main__":
     while True:
         results = next(frames)
         if not results: 
-            #print("No fiducials found")
             continue
         for result in results:
             uid = result.tag_id
@@ -20,10 +19,12 @@ if __name__ == "__main__":
             found_uid = env.find_obstacle_by_uid(uid)
             if found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
-                new_obstacle.set_uid = found_uid
+                new_obstacle.set_uid(found_uid)
                 env.add_obstacle(new_obstacle)
-        #print("Total obstacles " + str(len(env.obstacles)))
         env.create_boundaries()
+        # convert boundaries to graph space
+        # run shortest path search
+        # follow path somehow
         env.list_boundaries()
         env.clear_boundaries()
 

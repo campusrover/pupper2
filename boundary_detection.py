@@ -112,9 +112,6 @@ class Enviorment:
         for ob in self.obstacles:
             boundary_result = self.agent + ob
             self.boundaries.append(boundary_result)
-            # print("Boundary len: " + str(len(boundary_result)))
-            # print("Agent len: " + str(len(self.agent.points)))
-            # print("Obs len: " + str(len(ob.points)))
 
 
     def clear_boundaries(self):
