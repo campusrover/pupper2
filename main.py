@@ -1,8 +1,11 @@
+from copy import deepcopy
 from fiducial_vision import Vision
 from boundary_detection import *
+from transforms import *
 from agent import ego_agent
 from obstacle import obstacle
-from copy import deepcopy
+
+
 
 if __name__ == "__main__":
     cv = Vision()
@@ -16,15 +19,20 @@ if __name__ == "__main__":
         for result in results:
             uid = result.tag_id
             print("Found fiducial " + str(uid))
+            rotation = result.pose_R
+            transform = result.pose_t
+            
             found_uid = env.find_obstacle_by_uid(uid)
             if found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
                 new_obstacle.set_uid(found_uid)
                 env.add_obstacle(new_obstacle)
+                # transpose obstacle to where fiducial is
+                # rotate obstacle to match fiducial rotation
         env.create_boundaries()
-        # convert boundaries to graph space
-        # run shortest path search
-        # follow path somehow
+        # check if we can move forward without hitting boundaries 
+        # if we cannot then rotate 
+        # if we already rotated and can move forward then rotate opposite direction
         env.list_boundaries()
         env.clear_boundaries()
 

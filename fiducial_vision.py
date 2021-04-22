@@ -35,32 +35,3 @@ class Vision:
     def detect(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         return self.detector.detect(gray, estimate_tag_pose=True, camera_params=(2571.4, 2571.4, 320, 240), tag_size=0.065)
-
-    def isRotationMatrix(self, R):
-        Rt = np.transpose(R)
-        shouldBeIdentity = np.dot(Rt, R)
-        I = np.identity(3, dtype=R.dtype)
-        n = np.linalg.norm(I - shouldBeIdentity)
-        return n < 1e-6
-
-    def rotationMatrixToEulerAngles(self, R):
-
-        assert(self.isRotationMatrix(R))
-
-        sy = math.sqrt(R[0, 0] * R[0, 0] + R[1, 0] * R[1, 0])
-
-        singular = sy < 1e-6
-
-        if not singular:
-            x = math.atan2(R[2, 1], R[2, 2])
-            y = math.atan2(-R[2, 0], sy)
-            z = math.atan2(R[1, 0], R[0, 0])
-        else:
-            x = math.atan2(-R[1, 2], R[1, 1])
-            y = math.atan2(-R[2, 0], sy)
-            z = 0
-
-        return [x, y, z]
-
-    def hypot(self, tf):
-        return (tf[0] ** 2 + tf[1] ** 2 + tf[2] ** 2) ** 0.5
