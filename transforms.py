@@ -47,7 +47,7 @@ def rotate_point(point, origin, angle):
     return point
 
 def transform_shape(shape, rotation, translation):
-    yaw = rotation[2]
+    yaw = rotationMatrixToEulerAngles(rotation)[2]
     print("YAW: " + str(yaw))
     translation_x = translation[0]
     translation_z = translation[2]
