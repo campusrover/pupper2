@@ -4,6 +4,7 @@ class Vizualizer:
         self.obs = []
         self.ego = None
         self.bds = []
+        self.plot_size = 2.5
 
     def set_obs(self, obs):
         self.obs = obs
@@ -18,8 +19,8 @@ class Vizualizer:
         return len(self.obs) > 0 and self.ego is not None
 
     def show(self):
-        plt.xlim([-5, 5])
-        plt.ylim([-5, 5])
+        plt.xlim([-self.plot_size, self.plot_size])
+        plt.ylim([-self.plot_size, self.plot_size])
         if self.is_valid():
             for ob in self.obs:
                 ob_x = list(map(lambda p: p.x, ob.points))
