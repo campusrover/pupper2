@@ -18,6 +18,8 @@ class Vizualizer:
         return len(self.obs) > 0 and self.ego is not None
 
     def show(self):
+        plt.xlim([-5, 5])
+        plt.ylim([-5, 5])
         if self.is_valid():
             for ob in self.obs:
                 ob_x = list(map(lambda p: p.x, ob.points))
