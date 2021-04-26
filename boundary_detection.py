@@ -110,7 +110,7 @@ class Enviorment:
         found_uid = self.find_obstacle_by_uid(ob.uid)
         if found_uid > 0:
             self.obstacles[found_uid] = ob
-            
+
     def remove_obstacle(self, ob):
         ob_index = self.find_obstacle(ob)
         if ob_index > 0:
@@ -138,6 +138,7 @@ class Enviorment:
     def update_viz(self):
         self.viz.set_ego(self.agent)
         self.viz.set_obs(self.obstacles)
+        self.viz.set_bds(self.boundaries)
 
     def show_viz(self):
         self.viz.show()
