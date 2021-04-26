@@ -56,5 +56,5 @@ def transform_shape(shape, rotation, translation, origin):
     shape.transform_points(translation_x, translation_z)
     origin = shape.center
     print("ORIGIN: " + str(origin))
-    shape.points = rotate_points(shape.points, Point(0, 0), yaw)
+    shape.points = rotate_points(shape.points, Point(0, 0), yaw * 4)
     return shape
