@@ -48,6 +48,7 @@ def rotate_point(point, origin, angle):
 
 def transform_shape(shape, rotation, translation):
     yaw = rotation[2]
+    print("YAW: " + str(yaw))
     translation_x = translation[0]
     translation_z = translation[2]
     shape.transform_center(translation_x, translation_z)

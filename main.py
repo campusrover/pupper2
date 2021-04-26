@@ -4,7 +4,7 @@ from boundary_detection import *
 from transforms import *
 from agent import ego_agent
 from obstacle import obstacle
-
+import time
 
 
 if __name__ == "__main__":
@@ -34,6 +34,7 @@ if __name__ == "__main__":
                 env.update_obstacle(new_obstacle)
         env.update_viz()
         env.show_viz()
+        time.sleep(100)
         # env.create_boundaries()
         # env.clear_boundaries()
 
