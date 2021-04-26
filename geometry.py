@@ -15,7 +15,7 @@ def interpolate_line(a, b, n):
 
 def interpolate_shape(shape, n):
     all_points = []
-    for i in range(0, len(shape.points) + 1):
+    for i in range(0, len(shape.points)):
         p1 = shape.points[i]
         p2 = shape.points[(i + 1) % len(shape.points)]
         section_points = interpolate_line(p1, p2, n)
