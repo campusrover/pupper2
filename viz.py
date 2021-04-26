@@ -26,5 +26,5 @@ class Vizualizer:
             ego_x.append(ego_x[0])
             ego_y.append(ego_y[0])
             plt.plot(ego_x, ego_y, marker = 'o', color='g')
-            plt.show()
-            #plt.savefig('sample_plot.png')
+            #plt.show()
+            plt.savefig('sample_plot.png')
