@@ -42,9 +42,14 @@ def rotate_point(point, origin, angle):
     p_y = point.y - origin.y
     t_x = p_x * c - p_y * s
     t_y = p_x * s + p_y * c
-    point.x = t_x + origin.X
+    point.x = t_x + origin.x
     point.y = t_y + origin.y
     return point
 
-def transform_shape(shape, rotation, transform):
+def transform_shape(shape, rotation, translation):
+    yaw = rotation[2]
+    translation_x = translation[0]
+    translation_z = translation[2]
+    shape.transform_center(translation_x, translation_z)
+    shape.transform_points(translation_x, translation_z)
     return shape

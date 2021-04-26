@@ -1,5 +1,5 @@
 import sys
-
+from viz import Vizualizer
 
 class Point:
     def __init__(self, x, y):
@@ -58,6 +58,9 @@ class Shape:
             point.x += delta_x
             point.y += delta_y
 
+    def transform_center(self, delta_x, delta_y):
+        self.center = self.center + Point(delta_x, delta_y)
+
     def is_valid(self):
         return self.center is not None and len(self.points) > 0
 
@@ -68,12 +71,16 @@ class Shape:
                 result.append(self_point + other_point)
         return result
 
+    def get_points_for_viz(self):
+        x_points = [lambda p: p.x for p in self.points]
+
 
 class Enviorment: 
     def __init__(self):
         self.agent = None
         self.obstacles = []
         self.boundaries = []
+        self.viz = Vizualizer()
     
     def set_agent(self, agent):
         self.agent = agent
@@ -99,6 +106,11 @@ class Enviorment:
         if self.find_obstacle(ob) == -1:
             self.obstacles.append(ob)
 
+    def update_obstacle(self, ob):
+        found_uid = self.find_obstacle_by_uid(ob.uid)
+        if found_uid > 0:
+            self.obstacles[found_uid] = ob
+            
     def remove_obstacle(self, ob):
         ob_index = self.find_obstacle(ob)
         if ob_index > 0:
@@ -113,7 +125,6 @@ class Enviorment:
             boundary_result = self.agent + ob
             self.boundaries.append(boundary_result)
 
-
     def clear_boundaries(self):
         self.boundaries = []
 
@@ -123,3 +134,10 @@ class Enviorment:
         for boundary in self.boundaries:
             print("Boundary " + str(count) + " has " + str(len(boundary)) + " points")
             count += 1
+
+    def update_viz(self):
+        self.viz.set_ego(self.agent)
+        self.viz.set_obs(self.obstacles)
+
+    def show_viz(self):
+        self.viz.show()

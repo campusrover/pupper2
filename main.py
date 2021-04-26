@@ -20,20 +20,21 @@ if __name__ == "__main__":
             uid = result.tag_id
             print("Found fiducial " + str(uid))
             rotation = result.pose_R
-            transform = result.pose_t
+            translation = result.pose_t
             
             found_uid = env.find_obstacle_by_uid(uid)
             if found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
+                new_obstacle = transform_shape(new_obstacle, rotation, translation)
                 new_obstacle.set_uid(found_uid)
                 env.add_obstacle(new_obstacle)
-                # transpose obstacle to where fiducial is
-                # rotate obstacle to match fiducial rotation
-        env.create_boundaries()
-        # check if we can move forward without hitting boundaries 
-        # if we cannot then rotate 
-        # if we already rotated and can move forward then rotate opposite direction
-        env.list_boundaries()
-        env.clear_boundaries()
+            else:
+                new_obstacle = deepcopy(obstacle)
+                new_obstacle = transform_shape(new_obstacle, rotation, translation)
+                env.update_obstacle(new_obstacle)
+        env.update_viz()
+        env.show_viz()
+        # env.create_boundaries()
+        # env.clear_boundaries()
 
 

@@ -1,6 +1,10 @@
+import math
+from boundary_detection import * 
+
 def interpolate_line(a, b, n):
-    slope = (b.y - a.y)/(b.x - a.x)
-    angle = math.atan2(slope)
+    slope_num = (b.y - a.y)
+    slope_denom = (b.x - a.x)
+    angle = math.atan2(slope_num, slope_denom)
     dist = ((b.y - a.y) ** 2 + (b.x - a.x) ** 2) ** 0.5
     step = dist / n
     points = []
