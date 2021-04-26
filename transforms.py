@@ -1,6 +1,6 @@
 import math
 import numpy as np
-
+from boundary_detection import Point
 def isRotationMatrix(R):
     Rt = np.transpose(R)
     shouldBeIdentity = np.dot(Rt, R)
