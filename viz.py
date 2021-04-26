@@ -30,7 +30,7 @@ class Vizualizer:
                 bd_y = list(map(lambda p: p.y, bd))
                 bd_x.append(bd_x[0])
                 bd_y.append(bd_y[0])
-                plt.scatter(bd_x, bd_y, color='b', markersize=10)
+                plt.scatter(bd_x, bd_y, color='b', marker='.', markersize=10)
             ego_x = list(map(lambda p: p.x, self.ego.points))
             ego_y = list(map(lambda p: p.y, self.ego.points))
             ego_x.append(ego_x[0])
