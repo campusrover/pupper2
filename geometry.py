@@ -22,3 +22,4 @@ def interpolate_shape(shape, n):
         for point in section_points:
             all_points.append(point)
     shape.points = all_points
+    return shape
