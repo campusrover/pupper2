@@ -15,7 +15,8 @@ class Controller:
             "s": self.move_backward,
             "d": self.rotate_right,
             "q": self.move_left,
-            "e": self.move_right
+            "e": self.move_right,
+            "v": self.trot
         }
 
         keyboard.on_press(lambda c: self.keypress(c))
@@ -76,9 +77,14 @@ class Controller:
     def rotate_left(self):
         self.move(yaw=-self.velocity)
     
-    def toggle(self):
+    def toggle(self, state=1):
         msg = self.blank_msg.copy()
-        msg["L1"] = 1
+        msg["L1"] = state
+        self.pub.send(msg)
+        
+    def trot(self):
+        msg = self.blank_msg.copy()
+        msg["R1"] = 1
         self.pub.send(msg)
             
         
