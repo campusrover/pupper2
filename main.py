@@ -21,16 +21,16 @@ if __name__ == "__main__":
             print("Found fiducial " + str(uid))
             rotation = result.pose_R
             translation = result.pose_t
-            
+            origin = ego_agent.center
             found_uid = env.find_obstacle_by_uid(uid)
             if found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
-                new_obstacle = transform_shape(new_obstacle, rotation, translation)
+                new_obstacle = transform_shape(new_obstacle, rotation, translation, origin)
                 new_obstacle.set_uid(found_uid)
                 env.add_obstacle(new_obstacle)
             else:
                 new_obstacle = deepcopy(obstacle)
-                new_obstacle = transform_shape(new_obstacle, rotation, translation)
+                new_obstacle = transform_shape(new_obstacle, rotation, translation, origin)
                 env.update_obstacle(new_obstacle)
         env.update_viz()
         env.show_viz()
