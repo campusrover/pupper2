@@ -33,6 +33,7 @@ if __name__ == "__main__":
                 new_obstacle = transform_shape(new_obstacle, rotation, translation)
                 env.update_obstacle(new_obstacle)
         env.create_boundaries()
+        env.list_boundaries()
         env.clear_boundaries()
         env.update_viz()
         env.show_viz()
