@@ -48,11 +48,12 @@ def rotate_point(point, origin, angle):
     return point
 
 def transform_shape(shape, rotation, translation, origin):
-    yaw = rotationMatrixToEulerAngles(rotation)[2]
+    yaw = math.pi/2#rotationMatrixToEulerAngles(rotation)[2]
     #print("YAW: " + str(yaw))
     translation_x = translation[0]
     translation_z = translation[2]
     shape.transform_center(translation_x, translation_z)
     shape.transform_points(translation_x, translation_z)
-    shape.points = rotate_points(shape.points, Point(0, 0), yaw)
+    origin = shape.center
+    shape.points = rotate_points(shape.points, origin, yaw)
     return shape
