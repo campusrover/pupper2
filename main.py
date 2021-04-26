@@ -34,7 +34,7 @@ if __name__ == "__main__":
                 env.update_obstacle(new_obstacle)
         env.update_viz()
         env.show_viz()
-        #time.sleep(100)
+        time.sleep(100)
         # env.create_boundaries()
         # env.clear_boundaries()
 
