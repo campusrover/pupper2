@@ -80,6 +80,7 @@ class Enviorment:
         self.agent = None
         self.obstacles = []
         self.boundaries = []
+        self.path = []
         self.viz = Vizualizer()
     
     def set_agent(self, agent):
@@ -135,10 +136,14 @@ class Enviorment:
             print("Boundary " + str(count) + " has " + str(len(boundary)) + " points")
             count += 1
 
+    def add_path(self, path_points):
+        self.path = path_points
+
     def update_viz(self):
         self.viz.set_ego(self.agent)
         self.viz.set_obs(self.obstacles)
         self.viz.set_bds(self.boundaries)
+        self.viz.set_path(self.path)
 
     def show_viz(self):
         self.viz.show()

@@ -2,8 +2,10 @@ from copy import deepcopy
 from fiducial_vision import Vision
 from boundary_detection import *
 from transforms import *
+from goal import goal
 from agent import ego_agent
 from obstacle import obstacle
+from path_finder import PathFinder
 import time
 
 
@@ -12,18 +14,23 @@ if __name__ == "__main__":
     frames = cv.capture_continuous()
     env = Enviorment()
     env.set_agent(ego_agent)
+    goal_ = None
     while True:
         results = next(frames)
         if not results: 
             continue
+
+
         for result in results:
             uid = result.tag_id
             print("Found fiducial " + str(uid))
             rotation = result.pose_R
             translation = result.pose_t
-            origin = ego_agent.center
             found_uid = env.find_obstacle_by_uid(uid)
-            if found_uid == -1:
+            if uid == 0:
+                goal_ = goal
+                goal_ = transform_shape(goal_, rotation, translation)
+            elif found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
                 new_obstacle = transform_shape(new_obstacle, rotation, translation)
                 new_obstacle.set_uid(found_uid)
@@ -33,11 +40,10 @@ if __name__ == "__main__":
                 new_obstacle = transform_shape(new_obstacle, rotation, translation)
                 env.update_obstacle(new_obstacle)
         env.create_boundaries()
-        #env.list_boundaries()
-        env.update_viz()
-        env.show_viz()
-        time.sleep(100)
+        p = PathFinder(env, env.agent, goal_)
+        r = p.solve()
+        env.add_path(r)
+        # env.update_viz()
+        # env.show_viz()
+        # time.sleep(100)
         env.clear_boundaries()
-
-
-
