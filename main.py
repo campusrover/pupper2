@@ -7,6 +7,7 @@ from agent import ego_agent
 from obstacle import obstacle
 from path_finder import PathFinder
 import time
+import cPickle as pickle
 
 
 if __name__ == "__main__":
@@ -33,16 +34,17 @@ if __name__ == "__main__":
             elif found_uid == -1:
                 new_obstacle = deepcopy(obstacle)
                 new_obstacle = transform_shape(new_obstacle, rotation, translation)
-                new_obstacle.set_uid(found_uid)
+                new_obstacle.set_uid(uid)
                 env.add_obstacle(new_obstacle)
             else:
                 new_obstacle = deepcopy(obstacle)
                 new_obstacle = transform_shape(new_obstacle, rotation, translation)
                 env.update_obstacle(new_obstacle)
         env.create_boundaries()
-        p = PathFinder(env, env.agent, goal_)
-        r = p.solve()
-        env.add_path(r)
+        pickle.dump(env, open('sample_env.pkl', 'w'))
+        # p = PathFinder(env, env.agent, goal_)
+        # r = p.solve()
+        # env.add_path(r)
         # env.update_viz()
         # env.show_viz()
         # time.sleep(100)

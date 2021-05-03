@@ -34,4 +34,4 @@ class Vision:
 
     def detect(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        return self.detector.detect(gray, estimate_tag_pose=True, camera_params=(2571.4, 2571.4, 320, 240), tag_size=0.0262)
+        return self.detector.detect(gray, estimate_tag_pose=True, camera_params=(2571.4, 2571.4, 320, 240), tag_size=0.03)
