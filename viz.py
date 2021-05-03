@@ -51,7 +51,7 @@ class Vizualizer:
             ego_y = list(map(lambda p: p.y, self.ego.points))
             ego_x.append(ego_x[0])
             ego_y.append(ego_y[0])
-            plt.plot(ego_x, ego_y, color='g')
+            plt.plot(ego_x, ego_y, color='y')
 
             if self.show_:
                 plt.show()

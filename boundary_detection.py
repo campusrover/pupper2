@@ -12,6 +12,13 @@ class Point:
     def __str__(self):
         return "X: " + str(self.x) + ", Y: " + str(self.y)
 
+    def scale(self, scalar):
+        self.x *= scalar
+        self.y *= scalar
+
+    def dist(self, other):
+        return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
+
 
 class Shape:
     def __init__(self):
