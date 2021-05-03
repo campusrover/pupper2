@@ -7,7 +7,7 @@ from agent import ego_agent
 from obstacle import obstacle
 from path_finder import PathFinder
 import time
-import cPickle as pickle
+import _pickle as pickle
 
 
 if __name__ == "__main__":
@@ -41,7 +41,9 @@ if __name__ == "__main__":
                 new_obstacle = transform_shape(new_obstacle, rotation, translation)
                 env.update_obstacle(new_obstacle)
         env.create_boundaries()
-        pickle.dump(env, open('sample_env.pkl', 'w'))
+        pickle.dump(env, open('sample_env.pkl', 'wb'))
+        print("PICKLE DUMPED")
+        time.sleep(100)
         # p = PathFinder(env, env.agent, goal_)
         # r = p.solve()
         # env.add_path(r)
