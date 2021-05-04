@@ -4,10 +4,13 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import math
 from src.boundary_detection import * 
 
-def interpolate_line(a, b, n):
+def get_angle(a, b):
     slope_num = (b.y - a.y)
     slope_denom = (b.x - a.x)
-    angle = math.atan2(slope_num, slope_denom)
+    return math.atan2(slope_num, slope_denom)
+
+def interpolate_line(a, b, n):
+    angle = get_angle(a, b)
     dist = ((b.y - a.y) ** 2 + (b.x - a.x) ** 2) ** 0.5
     step = dist / n
     points = []

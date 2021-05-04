@@ -15,3 +15,7 @@ vision_settings:
 transform_settings: 
   z_coefficent: 4
   x_coefficent: 1
+vizualization_settings:
+  map_name: "map.png"
+robot_settings:
+  velocity: 0.5

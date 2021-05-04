@@ -11,7 +11,7 @@ class Vizualizer:
         self.path = None
         self.plot_size = 2.5
         self.show_ = False
-        self.name = 'local_plot.png'
+        self.name = 'map.png'
 
     def set_obs(self, obs):
         self.obs = obs
