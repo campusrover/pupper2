@@ -9,7 +9,7 @@ class Vizualizer:
         self.path = None
         self.plot_size = 2.5
         self.show_ = False
-        self.name = 'sample_plot.png'
+        self.name = 'local_plot.png'
 
     def set_obs(self, obs):
         self.obs = obs
@@ -52,7 +52,7 @@ class Vizualizer:
             ego_x.append(ego_x[0])
             ego_y.append(ego_y[0])
             plt.plot(ego_x, ego_y, color='y')
-
+            
             if self.show_:
                 plt.show()
             else:
