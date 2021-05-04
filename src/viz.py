@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
-import os.path as osp
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 class Vizualizer:
     def __init__(self):
@@ -56,4 +58,4 @@ class Vizualizer:
             if self.show_:
                 plt.show()
             else:
-                plt.savefig(osp.join('plots', self.name))
+                plt.savefig(os.path.join('plots', self.name))

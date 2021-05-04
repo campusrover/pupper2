@@ -1,10 +1,13 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from copy import deepcopy
 from fiducial_vision import Vision
 from boundary_detection import *
 from transforms import *
-from goal import goal
-from agent import ego_agent
-from obstacle import obstacle
+from models.goal import goal
+from models.agent import ego_agent
+from models.obstacle import obstacle
 from path_finder import PathFinder
 import time
 import _pickle as pickle

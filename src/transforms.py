@@ -1,6 +1,10 @@
 import math
 import numpy as np
 from boundary_detection import Point
+import yaml
+
+params = yaml.load(open('params.yaml'), Loader=yaml.FullLoader)
+
 def isRotationMatrix(R):
     Rt = np.transpose(R)
     shouldBeIdentity = np.dot(Rt, R)
@@ -50,8 +54,8 @@ def rotate_point(point, origin, angle):
 def transform_shape(shape, rotation, translation):
     rot_euler = rotationMatrixToEulerAngles(rotation)
     yaw = rot_euler[1]
-    translation_x = translation[0]
-    translation_z = translation[2]
+    translation_x = translation[0] * params['transform_settings']['x_coefficent']
+    translation_z = translation[2] * params['transform_settings']['z_coefficent']
     shape.transform_center(translation_x, translation_z)
     shape.transform_points(translation_x, translation_z)
     shape.points = rotate_points(shape.points, shape.center, yaw)

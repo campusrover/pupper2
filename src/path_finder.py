@@ -1,8 +1,15 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from geometry import *
 from boundary_detection import *
 from node import Node
 from tqdm import tqdm
 import time
+import yaml
+
+
+params = yaml.load(open('params.yaml'), Loader=yaml.FullLoader)
 
 class PathFinder:
     def __init__(self, env, start, goal):
@@ -12,10 +19,11 @@ class PathFinder:
         self.goal = goal
         self.path = []
 
-        self.inflation = 0.05
-        self.step = 0.5
-        self.dim_x = 8
-        self.dim_y = 8
+        self.inflation = params['graph_settings']['inflation']
+        self.step = params['graph_settings']['step']
+        self.dim_x = params['graph_settings']['dim_x']
+        self.dim_y = params['graph_settings']['dim_y']
+        self.diagnols = params['search_settings']['diagnols']
 
         self.max_dist = float('inf')
         self.range_x = int(self.dim_x // self.step)
@@ -96,10 +104,6 @@ class PathFinder:
         node_right = self.get_node_quick(current_node.point.x + 1, current_node.point.y)
         node_up = self.get_node_quick(current_node.point.x, current_node.point.y + 1)
         node_down = self.get_node_quick(current_node.point.x, current_node.point.y - 1)
-        node_up_left = self.get_node_quick(current_node.point.x - 1, current_node.point.y + 1)
-        node_up_right = self.get_node_quick(current_node.point.x + 1, current_node.point.y + 1)
-        node_down_left = self.get_node_quick(current_node.point.x - 1, current_node.point.y - 1)
-        node_down_right = self.get_node_quick(current_node.point.x + 1, current_node.point.y - 1)
 
         if node_left:
             new_distance = current_node.distance + self.get_edge_weight(current_node, node_left)
@@ -124,30 +128,36 @@ class PathFinder:
             if new_distance < node_down.distance: 
                 node_down.distance = new_distance
                 node_down.previous = current_node
-        
-        if node_up_left:
-            new_distance = current_node.distance + self.get_edge_weight(current_node, node_up_left)
-            if new_distance < node_up_left.distance: 
-                node_up_left.distance = new_distance
-                node_up_left.previous = current_node
-        
-        if node_up_right: 
-            new_distance = current_node.distance + self.get_edge_weight(current_node, node_up_right)
-            if new_distance < node_up_right.distance: 
-                node_up_right.distance = new_distance
-                node_up_right.previous = current_node
 
-        if node_down_left: 
-            new_distance = current_node.distance + self.get_edge_weight(current_node, node_down_left)
-            if new_distance < node_down_left.distance: 
-                node_down_left.distance = new_distance
-                node_down_left.previous = current_node
+        if self.diagnols:
+            node_up_left = self.get_node_quick(current_node.point.x - 1, current_node.point.y + 1)
+            node_up_right = self.get_node_quick(current_node.point.x + 1, current_node.point.y + 1)
+            node_down_left = self.get_node_quick(current_node.point.x - 1, current_node.point.y - 1)
+            node_down_right = self.get_node_quick(current_node.point.x + 1, current_node.point.y - 1)
 
-        if node_down_right: 
-            new_distance = current_node.distance + self.get_edge_weight(current_node, node_down_right)
-            if new_distance < node_down_right.distance: 
-                node_down_right.distance = new_distance
-                node_down_right.previous = current_node
+            if node_up_left:
+                new_distance = current_node.distance + self.get_edge_weight(current_node, node_up_left)
+                if new_distance < node_up_left.distance: 
+                    node_up_left.distance = new_distance
+                    node_up_left.previous = current_node
+            
+            if node_up_right: 
+                new_distance = current_node.distance + self.get_edge_weight(current_node, node_up_right)
+                if new_distance < node_up_right.distance: 
+                    node_up_right.distance = new_distance
+                    node_up_right.previous = current_node
+
+            if node_down_left: 
+                new_distance = current_node.distance + self.get_edge_weight(current_node, node_down_left)
+                if new_distance < node_down_left.distance: 
+                    node_down_left.distance = new_distance
+                    node_down_left.previous = current_node
+
+            if node_down_right: 
+                new_distance = current_node.distance + self.get_edge_weight(current_node, node_down_right)
+                if new_distance < node_down_right.distance: 
+                    node_down_right.distance = new_distance
+                    node_down_right.previous = current_node
 
 
     def solve(self):

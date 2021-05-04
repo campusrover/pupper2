@@ -1,5 +1,8 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import math
-from boundary_detection import * 
+from src.boundary_detection import * 
 
 def interpolate_line(a, b, n):
     slope_num = (b.y - a.y)

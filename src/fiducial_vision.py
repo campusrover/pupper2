@@ -8,7 +8,9 @@ import cv2
 import time
 import math
 import numpy as np
+import yaml
 
+params = yaml.load(open('params.yaml'), Loader=yaml.FullLoader)
 
 class Vision:
 
@@ -22,6 +24,10 @@ class Vision:
         self.detector = Detector(families="tag36h11")
 
         self.show_image = False
+        self.tag_size = params['vision_settings']['tag_size']
+        self.lens_size = params['vision_settings']['lens_size']
+        self.camera_x_center = params['vision_settings']['camera_x_center']
+        self.camera_y_center = params['vision_settings']['camera_y_center']
 
     def capture_continuous(self, format="bgr", use_video_port=True):
         def frame_generator():
@@ -34,4 +40,4 @@ class Vision:
 
     def detect(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        return self.detector.detect(gray, estimate_tag_pose=True, camera_params=(2571.4, 2571.4, 320, 240), tag_size=0.03)
+        return self.detector.detect(gray, estimate_tag_pose=True, camera_params=(self.lens_size, self.lens_size, self.camera_x_center, self.camera_y_center), tag_size=self.tag_size)
