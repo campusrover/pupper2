@@ -10,8 +10,10 @@ params = yaml.load(open('params.yaml'), Loader=yaml.FullLoader)
 ego_agent = Shape()
 
 
-# length = 0.6m, width = 0.4m
-ego_agent_points = [Point(-0.2, 0.3), Point(0.2, 0.3), Point(0.2, -0.3), Point(-0.2, -0.3)]
+x_dim = params['model_settings']['ego_agent_dim_x']
+y_dim = params['model_settings']['ego_agent_dim_y']
+
+ego_agent_points = [Point(-x_dim/2, y_dim/2), Point(x_dim/2, y_dim/2), Point(x_dim/2, -y_dim/2), Point(-x_dim/2, -y_dim/2)]
 
 ego_agent.set_center(Point(0, 0))
 ego_agent.set_points(ego_agent_points)

@@ -10,8 +10,10 @@ params = yaml.load(open('params.yaml'), Loader=yaml.FullLoader)
 obstacle = Shape()
 
 
-# length = 0.4m, width = 0.1m
-obstacle_points = [Point(-0.2, 0.05), Point(0.2, 0.05), Point(0.2, -0.05), Point(-0.2, -0.05)]
+dim_x = params['model_settings']['obstacle_dim_x']
+dim_y = params['model_settings']['obstacle_dim_y']
+
+obstacle_points = [Point(-dim_x/2, dim_y/2), Point(dim_x/2, dim_y/2), Point(dim_x/2, -dim_y/2), Point(-dim_x/2, -dim_y/2)]
 
 obstacle.set_center(Point(0, 0))
 obstacle.set_points(obstacle_points)

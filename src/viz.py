@@ -9,9 +9,10 @@ class Vizualizer:
         self.ego = None
         self.bds = []
         self.path = None
-        self.plot_size = 2.5
+        self.plot_size_x = params['vizualization_settings']['plot_dim_x']
+        self.plot_size_y = params['vizualization_settings']['plot_dim_y']
         self.show_ = False
-        self.name = 'map.png'
+        self.name = params['vizualization_settings']['map_name']
 
     def set_obs(self, obs):
         self.obs = obs
@@ -32,6 +33,8 @@ class Vizualizer:
         if self.is_valid():
             plt.xlim([-self.plot_size, self.plot_size])
             plt.ylim([-self.plot_size, self.plot_size])
+            # plt.xlim([-self.plot_size_x, self.plot_size_x])
+            # plt.ylim([-self.plot_size_y, self.plot_size_y])
 
             for ob in self.obs:
                 ob_x = list(map(lambda p: p.x, ob.points))
