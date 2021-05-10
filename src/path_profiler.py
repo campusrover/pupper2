@@ -25,8 +25,8 @@ class Profiler:
         #print(weights)
         #weights[0] = 100
         spline = interpolate.UnivariateSpline(path_x, path_y, w=weights)
-        xs = np.linspace(-3, 3, 1000)
-        plt.plot(xs, spline(xs), 'g', lw=3)
+        xs = np.linspace(0, 3, 1000)
+        plt.plot(xs, spline(xs), 'y', lw=2)
         plt.show()
 
     def get_profile(self):

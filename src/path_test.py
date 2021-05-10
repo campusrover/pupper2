@@ -15,8 +15,8 @@ print(len(env.path))
 env.update_viz()
 env.show_viz()
 
-# pr = Profiler()
-# pr.add_path(env.path)
-# pp = pr.get_profile()
-# pr.smooth_path()
+pr = Profiler()
+pr.add_path(env.path)
+pp = pr.get_profile()
+pr.smooth_path()
 

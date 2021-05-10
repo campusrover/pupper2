@@ -6,7 +6,7 @@ model_settings:
   obstacle_dim_y: 0.1
 graph_settings:
   inflation: 0.05
-  step: 0.125
+  step: 0.25
   dim_x: 8
   dim_y: 8
 search_settings:
