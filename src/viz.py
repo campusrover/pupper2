@@ -11,7 +11,7 @@ class Vizualizer:
         self.path = None
         self.plot_size_x = params['vizualization_settings']['plot_dim_x']
         self.plot_size_y = params['vizualization_settings']['plot_dim_y']
-        self.show_ = False
+        self.show_ = params['vizualization_settings']['show_plot']
         self.name = params['vizualization_settings']['map_name']
 
     def set_obs(self, obs):

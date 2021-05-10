@@ -70,14 +70,15 @@ if __name__ == "__main__":
         planner = PathFinder(env, env.agent, goal_)
         planner.solve()
 
-        profiler = Profiler()
-        profiler.add_path(planner.export_path())
-        smooth_path = profiler.get_profile()
+        # profiler = Profiler()
+        # profiler.add_path(planner.export_path())
+        # smooth_path = profiler.get_profile()
 
         # update and display/save plots
         env.add_path(p.export_path())
         env.update_viz()
         env.show_viz()
+        time.sleep(100)
 
         # reset obstacle boundaries for next iteration
         env.clear_boundaries()

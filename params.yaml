@@ -23,5 +23,6 @@ vizualization_settings:
   map_name: "map.png"
   plot_dim_x: 4
   plot_dim_y: 4
+  show_plot: False
 robot_settings:
   velocity: 0.5
