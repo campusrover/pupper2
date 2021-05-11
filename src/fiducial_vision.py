@@ -36,21 +36,21 @@ class Vision:
                 image = cv2.flip(image, -1)
                 self.capture.truncate(0)
                 results = self.detect(image)
-                for result in results:
-                    (ptA, ptB, ptC, ptD) = result.corners
-                    ptB = (int(ptB[0]), int(ptB[1]))
-                    ptC = (int(ptC[0]), int(ptC[1]))
-                    ptD = (int(ptD[0]), int(ptD[1]))
-                    ptA = (int(ptA[0]), int(ptA[1]))
-                    # draw the bounding box of the AprilTag detection
-                    cv2.line(image, ptA, ptB, (0, 255, 0), 2)
-                    cv2.line(image, ptB, ptC, (0, 255, 0), 2)
-                    cv2.line(image, ptC, ptD, (0, 255, 0), 2)
-                    cv2.line(image, ptD, ptA, (0, 255, 0), 2)
-                    # draw the center (x, y)-coordinates of the AprilTag
-                    (cX, cY) = (int(result.center[0]), int(result.center[1]))
-                    cv2.circle(image, (cX, cY), 5, (0, 0, 255), -1)
-                cv2.imshow("Fiducial Detection Image", image)
+                # for result in results:
+                #     (ptA, ptB, ptC, ptD) = result.corners
+                #     ptB = (int(ptB[0]), int(ptB[1]))
+                #     ptC = (int(ptC[0]), int(ptC[1]))
+                #     ptD = (int(ptD[0]), int(ptD[1]))
+                #     ptA = (int(ptA[0]), int(ptA[1]))
+                #     # draw the bounding box of the AprilTag detection
+                #     cv2.line(image, ptA, ptB, (0, 255, 0), 2)
+                #     cv2.line(image, ptB, ptC, (0, 255, 0), 2)
+                #     cv2.line(image, ptC, ptD, (0, 255, 0), 2)
+                #     cv2.line(image, ptD, ptA, (0, 255, 0), 2)
+                #     # draw the center (x, y)-coordinates of the AprilTag
+                #     (cX, cY) = (int(result.center[0]), int(result.center[1]))
+                #     cv2.circle(image, (cX, cY), 5, (0, 0, 255), -1)
+                # cv2.imshow("Fiducial Detection Image", image)
                 yield results
         return frame_generator()
 
