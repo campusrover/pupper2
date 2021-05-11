@@ -54,7 +54,9 @@ def rotate_point(point, origin, angle):
 def transform_shape(shape, rotation, translation):
     rot_euler = rotationMatrixToEulerAngles(rotation)
     yaw = rot_euler[1]
-    translation_x = translation[0] * params['transform_settings']['x_coefficent']
+    #print(yaw)
+    if abs(yaw) < 0.2: yaw = 0
+    translation_x = -1 * translation[0] * params['transform_settings']['x_coefficent']
     translation_z = translation[2] * params['transform_settings']['z_coefficent']
     shape.transform_center(translation_x, translation_z)
     shape.transform_points(translation_x, translation_z)

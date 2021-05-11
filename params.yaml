@@ -5,7 +5,7 @@ model_settings:
   obstacle_dim_x: 0.4
   obstacle_dim_y: 0.1
 graph_settings:
-  inflation: 0.05
+  inflation: 0.1
   step: 0.25
   dim_x: 8
   dim_y: 8
@@ -17,8 +17,8 @@ vision_settings:
   camera_x_center: 320 
   camera_y_center: 240
 transform_settings: 
-  z_coefficent: 4
-  x_coefficent: 1
+  z_coefficent: 1
+  x_coefficent: 4
 vizualization_settings:
   map_name: "map.png"
   plot_dim_x: 4

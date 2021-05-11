@@ -144,6 +144,9 @@ class Enviorment:
         for boundary in self.boundaries:
             print("Boundary " + str(count) + " has " + str(len(boundary)) + " points")
             count += 1
+            
+    def add_nodes(self, nodes):
+        self.nodes = nodes
 
     def add_path(self, path_points):
         self.path = path_points
@@ -153,6 +156,7 @@ class Enviorment:
         self.viz.set_obs(self.obstacles)
         self.viz.set_bds(self.boundaries)
         self.viz.set_path(self.path)
+        self.viz.set_nodes(self.nodes)
 
     def show_viz(self):
         self.viz.show()

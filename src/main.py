@@ -13,6 +13,8 @@ from path_profiler import Profiler
 import time
 import _pickle as pickle
 
+from controller import Controller
+
 
 if __name__ == "__main__":
 
@@ -26,6 +28,8 @@ if __name__ == "__main__":
 
     # goal object
     goal_ = None
+
+    #c = Controller()
 
     # wait until we have a stream of fiducials
     while True:
@@ -65,19 +69,23 @@ if __name__ == "__main__":
 
         # create boundaries for obstacles
         env.create_boundaries()
+        print("Done creating boundaries")
         
         # create a planner with current env, agent, and goal location and solve for a path
-        planner = PathFinder(env, env.agent, goal_)
+        planner = PathFinder(env, env.agent, goal_.points[0])
         planner.solve()
+        print("Done solving")
 
         # profiler = Profiler()
         # profiler.add_path(planner.export_path())
         # smooth_path = profiler.get_profile()
 
         # update and display/save plots
-        env.add_path(p.export_path())
+        env.add_path(planner.export_path())
+        env.add_nodes(planner.export_nodes())
         env.update_viz()
         env.show_viz()
+        print("Plot saved")
         time.sleep(100)
 
         # reset obstacle boundaries for next iteration

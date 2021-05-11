@@ -3,7 +3,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from geometry import *
 from boundary_detection import *
-from scipy import interpolate
+#from scipy import interpolate
 import matplotlib.pyplot as plt
 import numpy as np
 import time
@@ -19,15 +19,16 @@ class Profiler:
         self.path = path
 
     def smooth_path(self):
-        path_x = list(map(lambda p: p.x, self.path))
-        path_y = list(map(lambda p: p.y, self.path))
-        weights = [1 for w in range(1, len(path_x) + 1)]
+        return
+        #path_x = list(map(lambda p: p.x, self.path))
+        #path_y = list(map(lambda p: p.y, self.path))
+        #weights = [1 for w in range(1, len(path_x) + 1)]
         #print(weights)
         #weights[0] = 100
-        spline = interpolate.UnivariateSpline(path_x, path_y, w=weights)
-        xs = np.linspace(0, 3, 1000)
-        plt.plot(xs, spline(xs), 'y', lw=2)
-        plt.show()
+        #spline = interpolate.UnivariateSpline(path_x, path_y, w=weights)
+        #xs = np.linspace(0, 3, 1000)
+        #plt.plot(xs, spline(xs), 'y', lw=2)
+        #plt.show()
 
     def get_profile(self):
         profiled_path = []

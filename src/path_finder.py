@@ -30,11 +30,28 @@ class PathFinder:
         self.range_y = int(self.dim_y // self.step)
         self.scale = 1 / self.step
         self.map = self.explore()
+        print("Done generating graph")
         self.map_height = len(self.map)
         self.map_width = len(self.map[0])
         self.map_center_x = self.map_width // 2
         self.map_center_y = self.map_height // 2
         self.smart_boundaries = self.get_smart_boundaries()
+        
+        self.goal_x = int(self.goal.x * self.scale)
+        self.goal_y = int(self.goal.y * self.scale)
+        self.goal_p = Point(self.goal_x, self.goal_y)
+        self.goal_found = None
+        self.inflation *= self.scale
+        
+    def export_nodes(self):
+        nodes_x = []
+        nodes_y = []
+        for row in self.map:
+            for node in row:
+                nodes_x.append(node.point.x / self.scale)
+                nodes_y.append(node.point.y / self.scale)
+        return nodes_x, nodes_y
+                
 
     def get_smart_boundaries(self):
         smart_boundaries = []
@@ -53,14 +70,14 @@ class PathFinder:
 
     def in_range_of_boundary_quick(self, point):
         for boundary in self.smart_boundaries:
-            if point.x < boundary[0] and point.x > boundary[1] and point.y < boundary[2] and point.y > boundary[3]:
+            if point.x < boundary[0] + self.inflation and point.x > boundary[1] - self.inflation and point.y < boundary[2] + self.inflation and point.y > boundary[3] - self.inflation:
                 return True
         return False
 
     def in_range_of_boundary(self, point):
         for boundary in self.boundaries:
             for boundary_point in boundary:
-                if point.dist(boundary_point) < self.inflation:
+                if point.dist(boundary_point) < self.inflation * self.scale:
                     return True
         return False
 
@@ -162,16 +179,22 @@ class PathFinder:
 
     def solve(self):
         self.get_node_quick(self.start.x * self.scale, self.start.y * self.scale).distance = 0.0
+        iters = 0
         while True: 
             current_node = self.get_next_node()
-            if current_node.point.x == self.goal.x * self.scale and current_node.point.y == self.goal.y * self.scale:
+            dist = current_node.point.dist(self.goal_p)
+            if dist <= 1:
+                self.goal_found = current_node
+                #print(self.goal_p.x, self.goal_p.y)
                 break
             current_node.explored = True
             self.update_node_neighbor_dist(current_node)
+            #print(iters)
+            iters += 1
         self.resolve_path()
 
     def resolve_path(self):
-        self.recurse_path(self.get_node_quick(self.goal.x * self.scale, self.goal.y * self.scale))
+        self.recurse_path(self.goal_found)
 
     def recurse_path(self, node):
         if node.previous:
