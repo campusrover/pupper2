@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # import object to stream camera frames
     cv = Vision()
     frames = cv.capture_continuous()
-    env = Enviorment()
+    env = Environment()
 
     # set ego agent as env agent
     env.set_agent(ego_agent)
@@ -29,7 +29,12 @@ if __name__ == "__main__":
     # goal object
     goal_ = None
 
-    #c = Controller()
+    c = Controller()
+
+    # Controller needs to be set up manually before continuing
+    # Activate robot and then set it to throt mode.
+    while not c.ready:
+        time.sleep(20/1000)
 
     # wait until we have a stream of fiducials
     while True:
@@ -76,17 +81,53 @@ if __name__ == "__main__":
         planner.solve()
         print("Done solving")
 
-        # profiler = Profiler()
-        # profiler.add_path(planner.export_path())
-        # smooth_path = profiler.get_profile()
+        profiler = Profiler()
+        profiler.add_path(planner.export_path())
+        smooth_path = profiler.get_profile()
+        
+        i = 0
+
+        # The following parameters may need to be tuned
+        step_size = 0.01
+        step_size_rot = 0.005
+        threshold = 0.05
+        rot_threshold = 0.01
+
+        pose = (0, 0)
+        next_point = smooth_path[i]
+        
+        while i < len(smooth_path):
+            # Rotation right
+            if pose[1] - next_point[1] < -rot_threshold:
+
+                # send right rotation command 
+                c.rotate_right()
+                pose[1] += step_size_rot
+            # Rotation left
+            elif pose[1] - next_point[1] > rot_threshold:
+
+                # send left rotation command 
+                c.rotate_left()
+                pose[1] -= step_size_rot
+            #Move forward
+            elif pose[0] - next_point[0] > threshold:
+
+                # send move forward command 
+                c.move_forward()
+                pose[0] += step_size
+            else:
+                i += 1
+                next_point = smooth_path[i]
+            
+            time.sleep(20/1000)
 
         # update and display/save plots
-        env.add_path(planner.export_path())
-        env.add_nodes(planner.export_nodes())
-        env.update_viz()
-        env.show_viz()
-        print("Plot saved")
-        time.sleep(100)
+        # env.add_path(planner.export_path())
+        # env.add_nodes(planner.export_nodes())
+        # env.update_viz()
+        # env.show_viz()
+        # print("Plot saved")
+        # time.sleep(100)
 
         # reset obstacle boundaries for next iteration
         env.clear_boundaries()

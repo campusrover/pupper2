@@ -50,6 +50,9 @@ class Controller:
         }
 
         keyboard.on_press(lambda c: self.keypress(c))
+        
+        self.active = False
+        self.ready = False
 
         print("Controller initialized")
     
@@ -95,13 +98,16 @@ class Controller:
         msg = self.blank_msg.copy()
         msg["L1"] = 1
         self.pub.send(msg)
+
+        self.active = not self.active
         
     def toggle_trot(self):
         msg = self.blank_msg.copy()
         msg["R1"] = 1
         self.pub.send(msg)
 
+        self.ready = self.active and not self.ready
+
 if __name__ == "__main__":
     c = Controller()
     keyboard.wait()
-
